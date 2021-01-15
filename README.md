@@ -36,4 +36,4 @@ STDNE/
 **Please run STDNE in the following order.**
 
 1. Use `cd convert/dblp/ && python run.py` to generate dblp's GDV **(If exists .out files in convert/dblp/ folder, skip this)**.
-2. Return to `STDNE` folder, use `python STDNE` to begin training.
+2. Return to `STDNE` folder, use `python STDNE.py ` to begin training.
