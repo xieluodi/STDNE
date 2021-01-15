@@ -278,8 +278,7 @@ class STDNE:
             loader = DataLoader(self.data, batch_size=self.batch,
                                 shuffle=True, num_workers=10)
             if epoch % self.save_step == 0 and epoch != 0:
-                # torch.save(self, './model/dnrl-dblp-%d.bin' % epoch)
-                self.save_node_embeddings('./emb/dblp_htne_attn_%d.emb' % (epoch))
+                self.save_node_embeddings('./emb/dblp_%d.emb' % (epoch))
 
             if epoch % 1 == 0 and epoch != 0:
                 print('evaluation...')
@@ -299,6 +298,10 @@ class STDNE:
                 mi, ma = eva.lr_classification(train_ratio=0.8, label_data=self.cl_label_data)
                 self.micro_f1_log.append(mi)
                 self.macro_f1_log.append(ma)
+
+            if epoch % 50 == 0 and epoch:
+                print('Epoch {}\nBest Micro F1 Score: {}\nBest Macro F1 Score: {}'.format(epoch, max(self.micro_f1_log),
+                                                                                          max(self.macro_f1_log)))
 
             for i_batch, sample_batched in enumerate(loader):
                 if i_batch % 100 == 0 and i_batch != 0:
@@ -356,7 +359,7 @@ class STDNE:
 
             print('epoch ' + str(epoch) + ': avg loss = ' + str(self.loss.cpu().numpy() / len(self.data)) + '\n')
 
-        self.save_node_embeddings('./emb/dblp_htne_attn_%d.emb' % self.epochs)
+        self.save_node_embeddings('./emb/dblp_%d.emb' % self.epochs)
         print('Training finished\nBest Micro F1 Score: {}\nBest Macro F1 Score: {}'.format(max(self.micro_f1_log),
                                                                                            max(self.macro_f1_log)))
 
